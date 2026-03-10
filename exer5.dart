@@ -6,6 +6,5 @@ void main(List<String> arguments){
       soma += i;
     }
   }
-
   print(soma);
 }
