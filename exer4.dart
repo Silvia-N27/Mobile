@@ -1,4 +1,4 @@
-void main(List<String> arguments) {
+void main(List<String> arguments){
   int a = 1;
   int b = 2;
   int c = 3;
