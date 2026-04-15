@@ -1,0 +1,11 @@
+import 'package:flutter/material.dart';
+
+class GifPage extends StatelessWidget {
+  final Map gifData;
+  GifPage(this.gifData);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Placeholder();
+  }
+}
