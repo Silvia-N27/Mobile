@@ -9,8 +9,8 @@ class PorExtenso extends StatefulWidget {
 }
 
 class _PorExtensoState extends State<PorExtenso> {
-   String? campo;
-   String? resultado;
+  String? campo;
+  String? resultado;
   final apiService = Invertextoservice();
 
   @override
@@ -74,11 +74,11 @@ class _PorExtensoState extends State<PorExtenso> {
                         ),
                       );
                     default:
-                    if(snapshot.hasError){
-                      return Container();
-                    }else{
-                      return exibeResultado(context,snapshot);
-                    }
+                      if (snapshot.hasError) {
+                        return Container();
+                      } else {
+                        return exibeResultado(context, snapshot);
+                      }
                   }
                 },
               ),
@@ -89,11 +89,14 @@ class _PorExtensoState extends State<PorExtenso> {
     );
   }
 
-      Widget exibeResultado(BuildContext contexto, AsyncSnapshot snapshot){
-        return Padding(padding: EdgeInsets.only(top: 10.0), child: Text(
-          snapshot.data["text"] ?? '',
-          style: TextStyle(color: Colors.white, fontSize: 18),
-          softWrap: true,
-        ),);
-      }
+  Widget exibeResultado(BuildContext contexto, AsyncSnapshot snapshot) {
+    return Padding(
+      padding: EdgeInsets.only(top: 10.0),
+      child: Text(
+        snapshot.data["text"] ?? '',
+        style: TextStyle(color: Colors.white, fontSize: 18),
+        softWrap: true,
+      ),
+    );
+  }
 }

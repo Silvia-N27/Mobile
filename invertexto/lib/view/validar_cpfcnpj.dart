@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:invertexto/service/invertexto_service.dart';
 
-class BuscaCep extends StatefulWidget {
-  const BuscaCep({super.key});
+class ValidarCpfcnpj extends StatefulWidget {
+  const ValidarCpfcnpj({super.key});
 
   @override
-  State<BuscaCep> createState() => _BuscaCepState();
+  State<ValidarCpfcnpj> createState() => _ValidarCpfcnpjState();
 }
 
-class _BuscaCepState extends State<BuscaCep> {
+class _ValidarCpfcnpjState extends State<ValidarCpfcnpj> {
   String? campo;
   String? resultado;
   final apiService = Invertextoservice();
@@ -43,7 +43,7 @@ class _BuscaCepState extends State<BuscaCep> {
           children: <Widget>[
             TextField(
               decoration: InputDecoration(
-                labelText: "Digite um CEP",
+                labelText: "Digite um número",
                 labelStyle: TextStyle(color: Colors.white),
                 border: OutlineInputBorder(),
               ),
@@ -57,7 +57,7 @@ class _BuscaCepState extends State<BuscaCep> {
             ),
             Expanded(
               child: FutureBuilder(
-                future: apiService.buscaCEP(campo),
+                future: apiService.validarCPFeCNPJ(campo),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
@@ -90,23 +90,10 @@ class _BuscaCepState extends State<BuscaCep> {
   }
 
   Widget exibeResultado(BuildContext contexto, AsyncSnapshot snapshot) {
-    String enderecoCompleto = '';
-    if (snapshot.data != null) {
-      enderecoCompleto += snapshot.data["street"] ?? "Rua não disponível";
-      enderecoCompleto += "\n";
-      enderecoCompleto +=
-          snapshot.data["neighborhood"] ?? "Bairro não disponível";
-      enderecoCompleto += "\n";
-      enderecoCompleto += snapshot.data["city"] ?? "Cidade não disponível";
-      enderecoCompleto += "\n";
-      enderecoCompleto += snapshot.data["state"] ?? "Estado não disponível";
-      enderecoCompleto += "\n";
-    }
-
     return Padding(
       padding: EdgeInsets.only(top: 10.0),
       child: Text(
-        enderecoCompleto,
+        snapshot.data["text"] ?? '',
         style: TextStyle(color: Colors.white, fontSize: 18),
         softWrap: true,
       ),

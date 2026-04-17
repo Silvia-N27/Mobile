@@ -36,4 +36,20 @@ class Invertextoservice {
       rethrow;
     }
   }
+
+  Future<Map<String, dynamic>> validarCPFeCNPJ(String? valor) async {
+    try{
+      final url = Uri.parse("https://api.invertexto.com/v1/validator?token=$_token&value=$valor");
+      final response = await http.get(url);
+      if(response.statusCode == 200) {
+        return json.decode(response.body);
+      }else{
+        throw Exception('Erro ${response.statusCode} : ${response.body}');
+      }
+    }on SocketException{
+      throw Exception('Erro de conexão com a internet');
+    }catch(e) {
+      rethrow;
+    }
+  }
 }
