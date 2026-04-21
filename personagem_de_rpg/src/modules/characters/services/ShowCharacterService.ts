@@ -15,7 +15,7 @@ export default class ShowCharacterService {
         });
 
         if (!character) {
-            throw new AppError("Character not found");
+            throw new AppError("Character not found.");
         }
 
         return character;

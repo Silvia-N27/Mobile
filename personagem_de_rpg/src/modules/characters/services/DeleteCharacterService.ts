@@ -11,7 +11,7 @@ export default class DeleteCharacterService {
     const charactersRepository = AppDataSource.getRepository(RpgCharacter);
 
     const character = await charactersRepository.findOne({
-      where: { id },
+      where: { id }
     });
 
     if (!character) {

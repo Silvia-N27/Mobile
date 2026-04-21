@@ -13,19 +13,11 @@ interface IRequest {
 }
 
 export default class UpdateCharacterService {
-  public async execute({
-    id,
-    name,
-    characterClass,
-    level,
-    life,
-    mana,
-    strength,
-  }: IRequest): Promise<RpgCharacter> {
+  public async execute({ id, name, characterClass, level, life, mana, strength }: IRequest): Promise<RpgCharacter> {
     const charactersRepository = AppDataSource.getRepository(RpgCharacter);
 
     const character = await charactersRepository.findOne({
-      where: { id },
+      where: { id }
     });
 
     if (!character) {
@@ -33,7 +25,7 @@ export default class UpdateCharacterService {
     }
 
     const characterExists = await charactersRepository.findOne({
-      where: { name },
+      where: { name }
     });
 
     if (characterExists && characterExists.id !== id) {
