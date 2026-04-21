@@ -13,5 +13,5 @@ export const AppDataSource = new DataSource({
   synchronize: false,
   logging: true,
   entities: [RpgCharacter],
-  migrations: [path.join("src", "shared", "typeorm", "migrations", "*.ts")],
+  migrations: [path.join("src", "shared", "typeorm", "migrations", "*.ts")]
 });
