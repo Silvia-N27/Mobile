@@ -10,7 +10,7 @@ class ValidarCpfcnpj extends StatefulWidget {
 
 class _ValidarCpfcnpjState extends State<ValidarCpfcnpj> {
   String? campo;
-  String? resultado;
+  String? tipo;
   final apiService = Invertextoservice();
 
   @override
@@ -55,9 +55,30 @@ class _ValidarCpfcnpjState extends State<ValidarCpfcnpj> {
                 });
               }),
             ),
+            SizedBox(height: 10.0),
+
+            DropdownButtonFormField<String>(
+              value: tipo,
+              decoration: InputDecoration(
+                labelText: "Escolha um para validar",
+                labelStyle: TextStyle(color: Colors.white),
+                border: OutlineInputBorder(),
+              ),
+              dropdownColor: Colors.black,
+              style: TextStyle(color: Colors.white),
+              items: const [
+                DropdownMenuItem(value: "cpf", child: Text("CPF")),
+                DropdownMenuItem(value: "cnpj", child: Text("CNPJ")),
+              ],
+              onChanged: (value) {
+                setState(() {
+                  tipo = value;
+                });
+              },
+            ),
             Expanded(
               child: FutureBuilder(
-                future: apiService.validarCPFeCNPJ(campo),
+                future: apiService.validarCPFeCNPJ(campo, tipo),
                 builder: (context, snapshot) {
                   switch (snapshot.connectionState) {
                     case ConnectionState.waiting:
@@ -75,7 +96,17 @@ class _ValidarCpfcnpjState extends State<ValidarCpfcnpj> {
                       );
                     default:
                       if (snapshot.hasError) {
-                        return Container();
+                        return Padding(
+                          padding: EdgeInsets.only(top: 10.0),
+                          child: Text(
+                            snapshot.error.toString().replaceFirst(
+                              "Exception: ",
+                              "",
+                            ),
+                            style: TextStyle(color: Colors.white, fontSize: 18),
+                            softWrap: true,
+                          ),
+                        );
                       } else {
                         return exibeResultado(context, snapshot);
                       }
@@ -90,10 +121,24 @@ class _ValidarCpfcnpjState extends State<ValidarCpfcnpj> {
   }
 
   Widget exibeResultado(BuildContext contexto, AsyncSnapshot snapshot) {
+    String resultado = '';
+
+    if (snapshot.data != null) {
+    bool valido = snapshot.data["valid"] == true;
+
+
+      if (valido) {
+        resultado += "true\n";
+        resultado += '"${snapshot.data["formatted"]}"';
+      } else {
+        resultado += "false";
+      }
+    }
+
     return Padding(
       padding: EdgeInsets.only(top: 10.0),
       child: Text(
-        snapshot.data["text"] ?? '',
+        resultado,
         style: TextStyle(color: Colors.white, fontSize: 18),
         softWrap: true,
       ),
